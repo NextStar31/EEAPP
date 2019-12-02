@@ -2,17 +2,15 @@ import React from "react";
 import {
   Image,
   Platform,
-  ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableHighlight,
   Button,
   View,
   Linking
 } from "react-native";
-import { WebBrowser } from "expo";
 import Icon from "react-native-vector-icons/FontAwesome";
+import I18n from "../constants/i18n/i18n";
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -26,22 +24,22 @@ export default class HomeScreen extends React.Component {
           <Image
             source={
               __DEV__
-                ? require("../../assets/images/fond_short.png")
-                : require("../../assets/images/robot-prod.png")
+                ? require("../../../assets/images/fond_short.png")
+                : require("../../../assets/images/robot-prod.png")
             }
             style={styles.welcomeImage}
           />
         </View>
 
         <View style={styles.getStartedContainer}>
-          <Text style={styles.title}>BIENVENUE A PAC31 -</Text>
+          <Text style={styles.title}>BIENVENUE A PAC31</Text>
           <Text style={styles.subtitle}>
             EGLISE EVANGELIQUE APOSTOLIQUE DE TOULOUSE
           </Text>
         </View>
 
         <View style={styles.paragraphStyle}>
-          <Text style={styles.ptitleStyle}>Lieux :</Text>
+          <Text style={styles.ptitleStyle}>{I18n.t("adress")} :</Text>
           <Text style={styles.psubtitle}>
             27 ter rue Jules Tellier 31100 Toulouse
           </Text>
@@ -50,11 +48,7 @@ export default class HomeScreen extends React.Component {
             style={styles.btnClickContain}
           >
             <View style={styles.btnContainer}>
-              <Icon
-                name="map"
-                size={20}
-                color="white"
-              />
+              <Icon name="map" size={20} color="white" />
               <Text style={styles.btnText}>Visitez nous</Text>
             </View>
           </TouchableHighlight>
@@ -62,15 +56,20 @@ export default class HomeScreen extends React.Component {
 
         <View style={styles.tabBarInfoContainer}>
           <Text style={styles.tabBarInfoText}>
-            This is a tab bar. You can edit it in+:
+            Pour plus d'info, suivez nous sur les réseaux :
           </Text>
 
           <View
             style={[styles.codeHighlightContainer, styles.navigationFilename]}
           >
             <Button
+              onPress={this._handleFacebookPress}
+              title="Facebook"
+              color="#e88f00"
+            />
+            <Button
               onPress={this._handleHelpPress}
-              title="EN SAVOIR PLUS"
+              title="Site"
               color="#e88f00"
             />
           </View>
@@ -79,15 +78,32 @@ export default class HomeScreen extends React.Component {
     );
   }
 
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync(
+  _handleHelpPress = () => {
+    Linking.canOpenURL(
       "https://docs.expo.io/versions/latest/guides/development-mode"
-    );
+    ).then(supported => {
+      if (supported) {
+        Linking.openURL(
+          "https://docs.expo.io/versions/latest/guides/development-mode"
+        );
+      } else {
+        console.log(
+          "Don't know how to open URI: " +
+            "https://docs.expo.io/versions/latest/guides/development-mode"
+        );
+      }
+    });
   };
 
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      "https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes"
+  _handleFacebookPress = () => {
+    Linking.canOpenURL("https://fr-fr.facebook.com/eeachurch/").then(
+      supported => {
+        if (supported) {
+          Linking.openURL("https://fr-fr.facebook.com/eeachurch/");
+        } else {
+          console.log("Don't know how to open URI: " + "fb://page/PAGE_ID");
+        }
+      }
     );
   };
 
@@ -133,18 +149,18 @@ const styles = StyleSheet.create({
     height: "23%"
   },
   btnClickContain: {
-    alignSelf:'center',
+    alignSelf: "center",
     backgroundColor: "#e88f00",
     borderRadius: 5,
     padding: 5,
     marginTop: 5,
     marginBottom: 5,
-    width:'60%'
+    width: "60%"
   },
   btnContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   btnText: {
     fontSize: 18,
@@ -162,7 +178,8 @@ const styles = StyleSheet.create({
     marginVertical: "10%"
   },
   paragraphStyle: {
-    marginHorizontal: "5%"
+    marginHorizontal: "5%",
+    marginTop: "5%"
   },
   ptitleStyle: {
     fontSize: 24,
@@ -171,7 +188,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   psubtitle: {
-    textAlign:'center',
+    textAlign: "center",
     fontSize: 18,
     color: "#e88f00",
     lineHeight: 24
@@ -223,7 +240,11 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   navigationFilename: {
-    marginTop: 5
+    marginTop: 5,
+    flexDirection: "row",
+    flex: 1,
+    width:'100%',
+    justifyContent:'space-around'
   },
   helpContainer: {
     marginTop: 15,
