@@ -7,7 +7,8 @@ import {
   TouchableHighlight,
   Button,
   View,
-  Linking
+  Linking,
+  ScrollView
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import I18n from "../constants/i18n/i18n";
@@ -30,35 +31,62 @@ export default class HomeScreen extends React.Component {
             style={styles.welcomeImage}
           />
         </View>
-
         <View style={styles.getStartedContainer}>
-          <Text style={styles.title}>BIENVENUE A PAC31</Text>
+          <Text style={styles.title}>BIENVENUE A PAC31 -</Text>
           <Text style={styles.subtitle}>
             EGLISE EVANGELIQUE APOSTOLIQUE DE TOULOUSE
           </Text>
         </View>
-
-        <View style={styles.paragraphStyle}>
-          <Text style={styles.ptitleStyle}>{I18n.t("adress")} :</Text>
-          <Text style={styles.psubtitle}>
-            27 ter rue Jules Tellier 31100 Toulouse
-          </Text>
-          <TouchableHighlight
-            onPress={this._handleClickMap}
-            style={styles.btnClickContain}
+        <View style={{ height: "38%" }}>
+          <ScrollView
+            scrollEnabled={true}
+            scrollEventThrottle={30}
           >
-            <View style={styles.btnContainer}>
-              <Icon name="map" size={20} color="white" />
-              <Text style={styles.btnText}>Visitez nous</Text>
+            <View style={styles.paragraphStyle}>
+              <Text style={styles.ptitleStyle}>{I18n.t("adress")} :</Text>
+              <Text style={styles.psubtitle}>
+                27 ter rue Jules Tellier 31100 Toulouse
+              </Text>
+              <TouchableHighlight
+                onPress={this._handleClickMap}
+                style={styles.btnClickContain}
+              >
+                <View style={styles.btnContainer}>
+                  <Icon name="map" size={20} color="white" />
+                  <Text style={styles.btnText}>Visitez nous</Text>
+                </View>
+              </TouchableHighlight>
             </View>
-          </TouchableHighlight>
+
+            <View style={styles.paragraphStyle}>
+              <Text style={styles.ptitleStyle}>Contact :</Text>
+              <TouchableHighlight
+                onPress={this._handleCallPress}
+                style={styles.btnClickContain}
+              >
+                <View style={styles.btnContainer}>
+                  <Icon name="phone" size={20} color="white" />
+                  <Text style={styles.btnText}>0615085201</Text>
+                </View>
+              </TouchableHighlight>
+
+              <TouchableHighlight
+                onPress={this._handleEmailPress}
+                style={[styles.btnClickContain, styles.large]}
+              >
+                <View style={styles.btnContainer}>
+                  <Icon name="envelope" size={20} color="white" />
+                  <Text style={styles.btnText}>support@example.com</Text>
+                </View>
+              </TouchableHighlight>
+            </View>
+          </ScrollView>
         </View>
 
         <View style={styles.tabBarInfoContainer}>
           <Text style={styles.tabBarInfoText}>
             Pour plus d'info, suivez nous sur les réseaux :
           </Text>
-
           <View
             style={[styles.codeHighlightContainer, styles.navigationFilename]}
           >
@@ -77,6 +105,28 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   }
+
+  _handleCallPress = () => {
+    Linking.canOpenURL("tel:0615085201").then(supported => {
+      if (supported) {
+        Linking.openURL("tel:0615085201");
+      } else {
+        console.log("Don't know how to open URI: " + "tel:0615085201");
+      }
+    });
+  };
+
+  _handleEmailPress = () => {
+    Linking.canOpenURL("mailto:support@example.com").then(supported => {
+      if (supported) {
+        Linking.openURL("mailto:support@example.com");
+      } else {
+        console.log(
+          "Don't know how to open URI: " + "mailto:support@example.com"
+        );
+      }
+    });
+  };
 
   _handleHelpPress = () => {
     Linking.canOpenURL(
@@ -157,6 +207,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     width: "60%"
   },
+  large: {
+    width: "70%"
+  },
   btnContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -175,11 +228,17 @@ const styles = StyleSheet.create({
   },
   getStartedContainer: {
     alignItems: "center",
-    marginVertical: "10%"
+    paddingTop: "8%",
+    paddingBottom: "4%",
+    marginBottom: "2%",
+    /*borderBottomColor:'#ADADAD',
+    borderBottomWidth:1*/
   },
   paragraphStyle: {
+    flex: 1,
     marginHorizontal: "5%",
-    marginTop: "5%"
+    marginTop: "2%",
+    marginBottom: "3%"
   },
   ptitleStyle: {
     fontSize: 24,
@@ -212,7 +271,8 @@ const styles = StyleSheet.create({
     color: "#e88f00",
     lineHeight: 34,
     textAlign: "center",
-    marginTop: "5%"
+    marginTop: "5%",
+    fontWeight:"bold"
   },
   tabBarInfoContainer: {
     position: "absolute",
@@ -231,7 +291,7 @@ const styles = StyleSheet.create({
       }
     }),
     alignItems: "center",
-    backgroundColor: "#fbfbfb",
+    backgroundColor: "#F1F1F1",
     paddingVertical: 20
   },
   tabBarInfoText: {
@@ -243,8 +303,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
     flexDirection: "row",
     flex: 1,
-    width:'100%',
-    justifyContent:'space-around'
+    width: "100%",
+    justifyContent: "space-around"
   },
   helpContainer: {
     marginTop: 15,
