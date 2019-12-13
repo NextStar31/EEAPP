@@ -6,10 +6,13 @@ import {
   Image,
   Text,
   StyleSheet,
-  SafeAreaView
+  SafeAreaView,
+  Button
 } from "react-native";
 import Constants from "expo-constants";
 import Icon from "react-native-vector-icons/FontAwesome";
+import * as Calendar from "expo-calendar";
+import * as Permissions from 'expo-permissions';
 
 export default class EventDetailScreen extends React.Component {
   /* static navigationOptions = {
@@ -46,13 +49,26 @@ export default class EventDetailScreen extends React.Component {
     };
   }
 
+  _handleAddToCalendar = async () => {
+    console.log("clicked");
+
+    const hasCalendarPermission = await Permissions.askAsync(
+      Permissions.CALENDAR
+    ); 
+    console.log(hasCalendarPermission);
+    if (hasCalendarPermission.status === "granted") {
+      const calendars = await Calendar.getCalendarsAsync();
+      console.log(calendars);
+    }
+  };
+
   render() {
     const { navigation } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <View>
           <Text>
-            {navigation.getParam('id')} - {navigation.getParam('name')}
+            {navigation.getParam("id")} - {navigation.getParam("name")}
           </Text>
 
           <Image
@@ -81,6 +97,12 @@ export default class EventDetailScreen extends React.Component {
               </Text>
             </View>
           ))}
+
+          <Button
+            onPress={this._handleAddToCalendar}
+            title="Calendrier"
+            color="#e88f00"
+          />
         </View>
       </SafeAreaView>
     );
