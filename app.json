@@ -10,9 +10,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/Icon launcher/mipmap-xxxhdpi/ic_launcher.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/fond.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,9 +21,8 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
+    ], "android": {
+      "package": "com.eea.eeapp"
     }
   }
 }

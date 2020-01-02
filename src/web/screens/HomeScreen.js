@@ -23,11 +23,7 @@ export default class HomeScreen extends React.Component {
       <View style={styles.container}>
         <View style={styles.welcomeContainer}>
           <Image
-            source={
-              __DEV__
-                ? require("../../../assets/images/fond_short.png")
-                : require("../../../assets/images/robot-prod.png")
-            }
+            source={require("../../../assets/images/fond_short.png")}
             style={styles.welcomeImage}
           />
         </View>
@@ -38,10 +34,7 @@ export default class HomeScreen extends React.Component {
           </Text>
         </View>
         <View style={{ height: "38%" }}>
-          <ScrollView
-            scrollEnabled={true}
-            scrollEventThrottle={30}
-          >
+          <ScrollView scrollEnabled={true} scrollEventThrottle={30}>
             <View style={styles.paragraphStyle}>
               <Text style={styles.ptitleStyle}>{I18n.t("adress")} :</Text>
               <Text style={styles.psubtitle}>
@@ -230,7 +223,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: "8%",
     paddingBottom: "4%",
-    marginBottom: "2%",
+    marginBottom: "2%"
     /*borderBottomColor:'#ADADAD',
     borderBottomWidth:1*/
   },
@@ -272,7 +265,7 @@ const styles = StyleSheet.create({
     lineHeight: 34,
     textAlign: "center",
     marginTop: "5%",
-    fontWeight:"bold"
+    fontWeight: "bold"
   },
   tabBarInfoContainer: {
     position: "absolute",
