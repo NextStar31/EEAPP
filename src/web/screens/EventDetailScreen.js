@@ -98,10 +98,6 @@ export default class EventDetailScreen extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View>
-          <Text>
-            {navigation.getParam("id")} - {navigation.getParam("name")}
-          </Text>
-
           <Image
             style={styles.avatar}
             source={{
